@@ -681,43 +681,40 @@ namespace WhatsAppApi
             }
         }
 
-        public void SendMessageBroadcast(string[] to, FMessage message)
-        {
-            if (to != null && to.Length > 0 && message != null && !string.IsNullOrEmpty(message.data))
-            {
-                ProtocolTreeNode child;
-                if (message.media_wa_type == FMessage.Type.Undefined)
-                {
-                    //text broadcast
-                    child = new ProtocolTreeNode("body", null, null, WhatsApp.SYSEncoding.GetBytes(message.data));
-                }
-                else
-                {
-                    throw new NotImplementedException();
-                }
+		public void SendMessageBroadcast(string[] to, FMessage message)
+		{
+			if (to != null && to.Length > 0 && message != null && !string.IsNullOrEmpty(message.data))
+			{
+				ProtocolTreeNode child;
+				if (message.media_wa_type == FMessage.Type.Undefined)
+				{
+					//text broadcast
+					child = new ProtocolTreeNode("body", null, null, WhatsApp.SYSEncoding.GetBytes(message.data));
+				}
+				else
+				{
+					throw new NotImplementedException();
+				}
 
-                //compose broadcast envelope
-                ProtocolTreeNode xnode = new ProtocolTreeNode("x", new KeyValue[] {
-                    new KeyValue("xmlns", "jabber:x:event")
-                }, new ProtocolTreeNode("server", null));
-                List<ProtocolTreeNode> toNodes = new List<ProtocolTreeNode>();
-                foreach (string target in to)
-                {
-                    toNodes.Add(new ProtocolTreeNode("to", new KeyValue[] { new KeyValue("jid", WhatsAppApi.WhatsApp.GetJID(target)) }));
-                }
+				List<ProtocolTreeNode> toNodes = new List<ProtocolTreeNode>();
+				foreach (string target in to)
+				{
+					toNodes.Add(new ProtocolTreeNode("to", new KeyValue[] { new KeyValue("jid", WhatsAppApi.WhatsApp.GetJID(target)) }));
+				}
 
-                ProtocolTreeNode broadcastNode = new ProtocolTreeNode("broadcast", null, toNodes);
-                ProtocolTreeNode messageNode = new ProtocolTreeNode("message", new KeyValue[] {
-                    new KeyValue("to", "broadcast"),
-                    new KeyValue("type", message.media_wa_type == FMessage.Type.Undefined?"text":"media"),
-                    new KeyValue("id", message.identifier_key.id)
-                }, new ProtocolTreeNode[] {
-                    broadcastNode,
-                    xnode,
-                    child
-                });
-                this.SendNode(messageNode);
-            }
+				ProtocolTreeNode broadcastNode = new ProtocolTreeNode("broadcast", null, toNodes);
+				Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+				ProtocolTreeNode messageNode = new ProtocolTreeNode("message", new KeyValue[] {
+					new KeyValue("to", unixTimestamp.ToString() + "@broadcast"),
+					new KeyValue("type", message.media_wa_type == FMessage.Type.Undefined?"text":"media"),
+					new KeyValue("id", message.identifier_key.id)
+				}, new ProtocolTreeNode[] {
+					broadcastNode,
+					child
+				});
+				this.SendNode(messageNode);
+			}
+
         }
 
         public void SendNop()
