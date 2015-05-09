@@ -60,7 +60,7 @@ namespace WhatsAppApi
             this.whatsPort = Settings.WhatsConstants.WhatsPort;
             this.incomplete_message = new List<byte>();
         }
-        
+
         /// <summary>
         /// Connect to the whatsapp server
         /// </summary>
@@ -87,7 +87,7 @@ namespace WhatsAppApi
         }
 
         /// <summary>
-        /// Read 1024 bytes 
+        /// Read 1024 bytes
         /// </summary>
         /// <returns></returns>
         public byte[] ReadData(int length = 1024)
@@ -128,7 +128,8 @@ namespace WhatsAppApi
                 throw new Exception("Failed to read node header");
             }
             int nodeLength = 0;
-            nodeLength = (int)nodeHeader[1] << 8;
+            nodeLength  = ((int)nodeHeader[0] & 0x0F) << 16;
+            nodeLength |= (int)nodeHeader[1] << 8;
             nodeLength |= (int)nodeHeader[2] << 0;
 
             //buffered read
@@ -151,7 +152,7 @@ namespace WhatsAppApi
             buff.AddRange(nodeData.ToArray());
             return buff.ToArray();
         }
-       
+
         /// <summary>
         /// Read in a message with a specific length
         /// </summary>
@@ -182,7 +183,7 @@ namespace WhatsAppApi
                 {
                     System.Threading.Thread.Sleep(100);
                 }
-            } 
+            }
             while (receiveLength <= 0);
 
             byte[] tmpRet = new byte[receiveLength];
