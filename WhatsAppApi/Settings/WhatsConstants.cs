@@ -37,7 +37,7 @@ namespace WhatsAppApi.Settings
         /// <summary>
         /// The whatsapp version the client complies to
         /// </summary>
-		public const string WhatsAppVer = "2.12.68";
+		public const string WhatsAppVer = "2.12.81";
 
         /// <summary>
         /// The port that needs to be connected to
@@ -52,7 +52,7 @@ namespace WhatsAppApi.Settings
         /// <summary>
         /// The useragent used for http requests
         /// </summary>
-		public const string UserAgent = "WhatsApp/2.12.68 S40Version/14.26 Device/Nokia302";
+		public const string UserAgent = "WhatsApp/2.12.81 S40Version/14.26 Device/Nokia302";
 
         #endregion
 
@@ -63,7 +63,7 @@ namespace WhatsAppApi.Settings
         public static NumberStyles WhatsAppNumberStyle = (NumberStyles.AllowDecimalPoint | NumberStyles.AllowLeadingSign);
 
         /// <summary>
-        /// Unix epoch DateTime 
+        /// Unix epoch DateTime
         /// </summary>
         public static DateTime UnixEpoch = new DateTime(0x7b2, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
         #endregion
