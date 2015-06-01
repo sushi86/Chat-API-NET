@@ -145,6 +145,15 @@ namespace WhatsAppApi
             }
         }
 
+        public event OnGetMessageReceivedDelegate OnGetMessageReadedClient;
+        protected void fireOnGetMessageReadedClient(string from, string id)
+        {
+            if (this.OnGetMessageReadedClient != null)
+            {
+                this.OnGetMessageReadedClient(from, id);
+            }
+        }
+
         public event OnGetPresenceDelegate OnGetPresence;
         protected void fireOnGetPresence(string from, string type)
         {
