@@ -446,8 +446,7 @@ namespace WhatsAppApi
         public void SendCreateGroupChat(string subject, IEnumerable<string> participants)
         {
             string id = TicketCounter.MakeId();
-            IEnumerable<ProtocolTreeNode> source = from jid in participants select new ProtocolTreeNode("participant", new[] { new KeyValue("jid", GetJID(jid)) });
-            var participant = new ProtocolTreeNode(participant, source);
+            IEnumerable<ProtocolTreeNode> participant = from jid in participants select new ProtocolTreeNode("participant", new[] { new KeyValue("jid", GetJID(jid)) });
             var child = new ProtocolTreeNode("create", new[] { new KeyValue("subject", subject) }, new ProtocolTreeNode[] { participant });
             var node = new ProtocolTreeNode("iq", new[] { new KeyValue("id", id), new KeyValue("type", "set"), new KeyValue("xmlns", "w:g2"), new KeyValue("to", "g.us") }, new ProtocolTreeNode[] { child });
             this.SendNode(node);
