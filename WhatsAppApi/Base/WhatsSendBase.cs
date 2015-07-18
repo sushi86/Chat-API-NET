@@ -195,6 +195,7 @@ namespace WhatsAppApi
                         this.fireOnGetMessageReceivedClient(from, id);
                         break;
                     case "read":
+                        this.fireOnGetMessageReadedClient(from, id);
                         //read by target
                         //todo
                         break;

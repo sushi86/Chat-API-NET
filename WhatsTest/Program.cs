@@ -35,6 +35,7 @@ namespace WhatsTest
             wa.OnLoginSuccess += wa_OnLoginSuccess;
             wa.OnLoginFailed += wa_OnLoginFailed;
             wa.OnGetMessage += wa_OnGetMessage;
+            wa.OnGetMessageReadedClient += wa_OnGetMessageReadedClient;
             wa.OnGetMessageReceivedClient += wa_OnGetMessageReceivedClient;
             wa.OnGetMessageReceivedServer += wa_OnGetMessageReceivedServer;
             wa.OnNotificationPicture += wa_OnNotificationPicture;
@@ -195,6 +196,11 @@ namespace WhatsTest
         static void wa_OnGetLastSeen(string from, DateTime lastSeen)
         {
             Console.WriteLine("{0} last seen on {1}", from, lastSeen.ToString());
+        }
+
+        static void wa_OnGetMessageReadedClient(string from, string id)
+        {
+            Console.WriteLine("Message {0} to {1} readed by client", id, from);
         }
 
         static void wa_OnGetMessageReceivedServer(string from, string id)
