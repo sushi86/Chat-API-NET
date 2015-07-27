@@ -25,9 +25,9 @@ namespace WhatsTest
             System.Console.OutputEncoding = Encoding.Default;
             System.Console.InputEncoding = Encoding.Default;
             string nickname = "";
-			string sender = ""; // Mobile number with country code (but without + or 00)
-			string password = "";//v2 password
-            string target = "";// Mobile number to send the message to
+			      string sender   = ""; // Mobile number with country code (but without + or 00)
+			      string password = "";//v2 password
+            string target   = "";// Mobile number to send the message to
 
             WhatsApp wa = new WhatsApp(sender, password, nickname, true);
 
@@ -71,13 +71,13 @@ namespace WhatsTest
                 catch (Exception) { };
             }
 
-            wa.Login(nextChallenge);
+      wa.Login(nextChallenge);
 			wa.SendGetServerProperties ();
 
-            ProcessChat(wa, target);
-            Console.ReadKey();
+      ProcessChat(wa, target);
+      Console.ReadKey();
 
-			wa.SendMessage ("34696649652", "test");
+			wa.SendMessage (sender, "test");
 			while (true) {
 				wa.pollMessage ();
 			}
@@ -268,7 +268,7 @@ namespace WhatsTest
                                                     Thread.Sleep(100);
                                                     continue;
                                                 }
-                                                    
+
                                             }
                                             catch (ThreadAbortException)
                                             {
@@ -314,7 +314,7 @@ namespace WhatsTest
                         wa.SendMessage(tmpUser.GetFullJid(), line);
                         break;
                 }
-           } 
+           }
         }
     }
 }
