@@ -18,18 +18,18 @@ namespace WhatsAppApi
                 this.OnDisconnect(ex);
             }
         }
-        
+
         public event NullDelegate OnConnectSuccess;
-        protected void fireOnConnectSuccess() 
+        protected void fireOnConnectSuccess()
         {
             if (this.OnConnectSuccess != null)
             {
                 this.OnConnectSuccess();
             }
         }
-        
+
         public event ExceptionDelegate OnConnectFailed;
-        protected void fireOnConnectFailed(Exception ex) 
+        protected void fireOnConnectFailed(Exception ex)
         {
             if (this.OnConnectFailed != null)
             {
@@ -38,7 +38,7 @@ namespace WhatsAppApi
         }
 
         public event LoginSuccessDelegate OnLoginSuccess;
-        protected void fireOnLoginSuccess(string pn, byte[] data) 
+        protected void fireOnLoginSuccess(string pn, byte[] data)
         {
             if (this.OnLoginSuccess != null)
             {
@@ -47,7 +47,7 @@ namespace WhatsAppApi
         }
 
         public event StringDelegate OnLoginFailed;
-        protected void fireOnLoginFailed(string data) 
+        protected void fireOnLoginFailed(string data)
         {
             if (this.OnLoginFailed != null)
             {
@@ -298,6 +298,15 @@ namespace WhatsAppApi
             }
         }
 
+        public event OnGetBroadcastListsDelegate OnGetBroadcastLists;
+        protected void fireOnGetBroadcastLists(IEnumerable<string> listIds)
+        {
+            if (OnGetBroadcastLists != null)
+            {
+                OnGetBroadcastLists(listIds);
+            }
+        }
+
         //event delegates
         public delegate void OnContactNameDelegate(string from, string contactName);
         public delegate void NullDelegate();
@@ -324,5 +333,6 @@ namespace WhatsAppApi
         public delegate void OnGetParticipantRemovedDelegate(string gjid, string jid, string author, DateTime time);
         public delegate void OnGetParticipantRenamedDelegate(string gjid, string oldJid, string newJid, DateTime time);
         public delegate void OnGetGroupSubjectDelegate(string gjid, string jid, string username, string subject, DateTime time);
+        public delegate void OnGetBroadcastListsDelegate(IEnumerable<string> listIds);
     }
 }

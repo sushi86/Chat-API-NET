@@ -502,6 +502,16 @@ namespace WhatsAppApi
                 }
                 this.fireOnGetPrivacySettings(settings);
             }
+
+            if (node.GetAttribute("type").Equals("result", StringComparison.OrdinalIgnoreCase) && node.GetChild("list") != null)
+            {
+                var lists = new List<string>();
+                foreach (var list in node.GetAllChildren("list"))
+                {
+                    lists.Add(list.GetAttribute("id"));
+                }
+                fireOnGetBroadcastLists(lists);
+            }
         }
 
         protected void handleNotification(ProtocolTreeNode node)
