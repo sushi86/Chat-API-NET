@@ -18,18 +18,18 @@ namespace WhatsAppApi
                 this.OnDisconnect(ex);
             }
         }
-
+        
         public event NullDelegate OnConnectSuccess;
-        protected void fireOnConnectSuccess()
+        protected void fireOnConnectSuccess() 
         {
             if (this.OnConnectSuccess != null)
             {
                 this.OnConnectSuccess();
             }
         }
-
+        
         public event ExceptionDelegate OnConnectFailed;
-        protected void fireOnConnectFailed(Exception ex)
+        protected void fireOnConnectFailed(Exception ex) 
         {
             if (this.OnConnectFailed != null)
             {
@@ -38,7 +38,7 @@ namespace WhatsAppApi
         }
 
         public event LoginSuccessDelegate OnLoginSuccess;
-        protected void fireOnLoginSuccess(string pn, byte[] data)
+        protected void fireOnLoginSuccess(string pn, byte[] data) 
         {
             if (this.OnLoginSuccess != null)
             {
@@ -47,7 +47,7 @@ namespace WhatsAppApi
         }
 
         public event StringDelegate OnLoginFailed;
-        protected void fireOnLoginFailed(string data)
+        protected void fireOnLoginFailed(string data) 
         {
             if (this.OnLoginFailed != null)
             {
@@ -128,20 +128,20 @@ namespace WhatsAppApi
         }
 
         public event OnGetMessageReceivedDelegate OnGetMessageReceivedServer;
-        protected void fireOnGetMessageReceivedServer(string from, string participant, string id)
+        protected void fireOnGetMessageReceivedServer(string from, string id)
         {
             if (this.OnGetMessageReceivedServer != null)
             {
-                this.OnGetMessageReceivedServer(from, participant, id);
+                this.OnGetMessageReceivedServer(from, id);
             }
         }
 
         public event OnGetMessageReceivedDelegate OnGetMessageReceivedClient;
-        protected void fireOnGetMessageReceivedClient(string from, string participant, string id)
+        protected void fireOnGetMessageReceivedClient(string from, string id)
         {
             if (this.OnGetMessageReceivedClient != null)
             {
-                this.OnGetMessageReceivedClient(from, participant, id);
+                this.OnGetMessageReceivedClient(from, id);
             }
         }
 
@@ -298,15 +298,6 @@ namespace WhatsAppApi
             }
         }
 
-        public event OnGetBroadcastListsDelegate OnGetBroadcastLists;
-        protected void fireOnGetBroadcastLists(IEnumerable<string> listIds)
-        {
-            if (OnGetBroadcastLists != null)
-            {
-                OnGetBroadcastLists(listIds);
-            }
-        }
-
         //event delegates
         public delegate void OnContactNameDelegate(string from, string contactName);
         public delegate void NullDelegate();
@@ -314,7 +305,7 @@ namespace WhatsAppApi
         public delegate void LoginSuccessDelegate(string phoneNumber, byte[] data);
         public delegate void StringDelegate(string data);
         public delegate void OnErrorDelegate(string id, string from, int code, string text);
-        public delegate void OnGetMessageReceivedDelegate(string from, string participant, string id);
+        public delegate void OnGetMessageReceivedDelegate(string from, string id);
         public delegate void OnNotificationPictureDelegate(string type, string jid, string id);
         public delegate void OnGetMessageDelegate(ProtocolTreeNode messageNode, string from, string id, string name, string message, bool receipt_sent);
         public delegate void OnGetPresenceDelegate(string from, string type);
@@ -333,6 +324,5 @@ namespace WhatsAppApi
         public delegate void OnGetParticipantRemovedDelegate(string gjid, string jid, string author, DateTime time);
         public delegate void OnGetParticipantRenamedDelegate(string gjid, string oldJid, string newJid, DateTime time);
         public delegate void OnGetGroupSubjectDelegate(string gjid, string jid, string username, string subject, DateTime time);
-        public delegate void OnGetBroadcastListsDelegate(IEnumerable<string> listIds);
     }
 }

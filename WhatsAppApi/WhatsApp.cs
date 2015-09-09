@@ -718,43 +718,6 @@ namespace WhatsAppApi
 
         }
 
-        public void SendGetBroadcastLists()
-        {
-            string id = TicketCounter.MakeId("get_lists_");
-            var listNode = new ProtocolTreeNode("lists", null);
-            var node = new ProtocolTreeNode("iq", new[]
-            {
-                new KeyValue("to", "s.whatsapp.net"),
-                new KeyValue("id", id),
-                new KeyValue("xmlns", "w:b"),
-                new KeyValue("type", "get")
-            }, new[] { listNode });
-
-            SendNode(node);
-        }
-
-        public void sendDeleteBroadcastLists(IEnumerable<string> listIds)
-        {
-            if (listIds == null) return;
-
-            string id = TicketCounter.MakeId(string.Empty);
-            var listNodes = new List<ProtocolTreeNode>();
-            foreach (var listId in listIds)
-            {
-                listNodes.Add(new ProtocolTreeNode("list", new List<KeyValue> { new KeyValue("id", listId) }, null, null));
-            }
-            var deleteNode = new ProtocolTreeNode("delete", null, listNodes, null);
-            var node = new ProtocolTreeNode("iq", new[]
-            {
-                new KeyValue("to", "s.whatsapp.net"),
-                new KeyValue("id", id),
-                new KeyValue("xmlns", "w:b"),
-                new KeyValue("type", "set")
-            }, new[] { deleteNode });
-
-            SendNode(node);
-        }
-
         public void SendNop()
         {
             this.SendNode(null);

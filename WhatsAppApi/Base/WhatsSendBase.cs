@@ -186,14 +186,13 @@ namespace WhatsAppApi
             if (ProtocolTreeNode.TagEquals(node, "receipt"))
             {
                 string from = node.GetAttribute("from");
-                string participant = node.GetAttribute("participant");
                 string id = node.GetAttribute("id");
                 string type = node.GetAttribute("type") ?? "delivery";
                 switch (type)
                 {
                     case "delivery":
                         //delivered to target
-                        this.fireOnGetMessageReceivedClient(from, participant, id);
+                        this.fireOnGetMessageReceivedClient(from, id);
                         break;
                     case "read":
                         this.fireOnGetMessageReadedClient(from, id);
@@ -285,7 +284,7 @@ namespace WhatsAppApi
                 if (cls == "message")
                 {
                     //server receipt
-                    this.fireOnGetMessageReceivedServer(node.GetAttribute("from"), node.GetAttribute("participant"), node.GetAttribute("id"));
+                    this.fireOnGetMessageReceivedServer(node.GetAttribute("from"), node.GetAttribute("id"));
                 }
             }
 
@@ -502,16 +501,6 @@ namespace WhatsAppApi
                     );
                 }
                 this.fireOnGetPrivacySettings(settings);
-            }
-
-            if (node.GetAttribute("type").Equals("result", StringComparison.OrdinalIgnoreCase) && node.GetChild("list") != null)
-            {
-                var lists = new List<string>();
-                foreach (var list in node.GetAllChildren("list"))
-                {
-                    lists.Add(list.GetAttribute("id"));
-                }
-                fireOnGetBroadcastLists(lists);
             }
         }
 
