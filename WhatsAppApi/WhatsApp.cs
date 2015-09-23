@@ -838,7 +838,7 @@ namespace WhatsAppApi
 
         public void SendGetGroups(string id, string type)
         {
-            var child = new ProtocolTreeNode("list", new[] { new KeyValue("type", type) });
+            var child = new ProtocolTreeNode(type, null);
             var node = new ProtocolTreeNode("iq", new[] { new KeyValue("id", id), new KeyValue("type", "get"), new KeyValue("xmlns", "w:g2"), new KeyValue("to", "g.us") }, child);
             this.SendNode(node);
         }
