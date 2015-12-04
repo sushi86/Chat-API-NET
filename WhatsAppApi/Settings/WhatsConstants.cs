@@ -33,7 +33,6 @@ namespace WhatsAppApi.Settings
         /// </summary>
         public const string WhatsGroupChat = "g.us";
 
-
         /// <summary>
         /// The whatsapp version the client complies to
         /// </summary>

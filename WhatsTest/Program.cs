@@ -78,7 +78,8 @@ namespace WhatsTest
       Console.ReadKey();
 
 			wa.SendMessage (sender, "test");
-			while (true) {
+            while (true)
+            {
 				wa.pollMessage ();
 			}
         }
@@ -144,9 +145,9 @@ namespace WhatsTest
             File.WriteAllBytes(string.Format("{0}.vcf", name), data);
         }
 
-        static void wa_OnGetMessageLocation(ProtocolTreeNode locationNode, string from, string id, double lon, double lat, string url, string name, byte[] preview)
+        static void wa_OnGetMessageLocation(ProtocolTreeNode locationNode, string from, string id, double lon, double lat, string url, string name, byte[] preview, string userName)
         {
-            Console.WriteLine("Got location from {0} ({1}, {2})", from, lat, lon);
+            Console.WriteLine("Got location from {0} username {1} ({1}, {2})", from, userName, lat, lon);
             if(!string.IsNullOrEmpty(name))
             {
                 Console.WriteLine("\t{0}", name);
@@ -154,9 +155,9 @@ namespace WhatsTest
             File.WriteAllBytes(string.Format("{0}{1}.jpg", lat, lon), preview);
         }
 
-        static void wa_OnGetMessageVideo(ProtocolTreeNode mediaNode, string from, string id, string fileName, int fileSize, string url, byte[] preview)
+        static void wa_OnGetMessageVideo(ProtocolTreeNode mediaNode, string from, string id, string fileName, int fileSize, string url, byte[] preview, string name)
         {
-            Console.WriteLine("Got video from {0}", from, fileName);
+            Console.WriteLine("Got video from {0} name{1}", from, name, fileName);
             OnGetMedia(fileName, url, preview);
         }
 
@@ -171,15 +172,15 @@ namespace WhatsTest
             }
         }
 
-        static void wa_OnGetMessageAudio(ProtocolTreeNode mediaNode, string from, string id, string fileName, int fileSize, string url, byte[] preview)
+        static void wa_OnGetMessageAudio(ProtocolTreeNode mediaNode, string from, string id, string fileName, int fileSize, string url, byte[] preview, string name)
         {
-            Console.WriteLine("Got audio from {0}", from, fileName);
+            Console.WriteLine("Got audio from {0} name{1}", from, name, fileName);
             OnGetMedia(fileName, url, preview);
         }
 
-        static void wa_OnGetMessageImage(ProtocolTreeNode mediaNode, string from, string id, string fileName, int size, string url, byte[] preview)
+        static void wa_OnGetMessageImage(ProtocolTreeNode mediaNode, string from, string id, string fileName, int size, string url, byte[] preview, string name)
         {
-            Console.WriteLine("Got image from {0}", from, fileName);
+            Console.WriteLine("Got image from {0} name{1}", from, name, fileName);
             OnGetMedia(fileName, url, preview);
         }
 
