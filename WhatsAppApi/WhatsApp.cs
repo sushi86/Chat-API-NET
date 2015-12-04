@@ -80,6 +80,7 @@ namespace WhatsAppApi
 
         protected FMessage getFmessageImage(string to, byte[] ImageData, ImageType imgtype)
         {
+            to = GetJID(to);
             string type = string.Empty;
             string extension = string.Empty;
             switch (imgtype)
@@ -250,17 +251,20 @@ namespace WhatsAppApi
             string id = TicketManager.GenerateId();
             ProtocolTreeNode node = new ProtocolTreeNode("iq", new KeyValue[] {
                 new KeyValue("id", id),
-                new KeyValue("to", WhatsConstants.WhatsAppServer),
+                new KeyValue("to", to),
                 new KeyValue("type", "set"),
                 new KeyValue("xmlns", "w:m")
             }, media);
             this.uploadResponse = null;
             this.SendNode(node);
             int i = 0;
-            while (this.uploadResponse == null && i <= 10)
+            while (this.uploadResponse == null && i <= 100)
             {
-                i++;
+                if (m_usePoolMessages)
+                    System.Threading.Thread.Sleep(500);
+                else
                 this.pollMessage();
+                i++;
             }
             if (this.uploadResponse != null && this.uploadResponse.GetChild("duplicate") != null)
             {
@@ -317,7 +321,14 @@ namespace WhatsAppApi
 
                     TcpClient tc = new TcpClient(uri.Host, 443);
                     SslStream ssl = new SslStream(tc.GetStream());
+                    try
+                    {
                     ssl.AuthenticateAsClient(uri.Host);
+                    }
+                    catch (Exception e)
+                    {
+                        throw e;
+                    }
 
                     List<byte> buf = new List<byte>();
                     buf.AddRange(Encoding.UTF8.GetBytes(post));

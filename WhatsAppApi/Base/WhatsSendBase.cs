@@ -11,6 +11,7 @@ namespace WhatsAppApi
 {
     public class WhatsSendBase : WhatsAppBase
     {
+	protected bool m_usePoolMessages = false;
         public void Login(byte[] nextChallenge = null)
         {
             //reset stuff
@@ -53,7 +54,9 @@ namespace WhatsAppApi
 
         public void PollMessages(bool autoReceipt = true)
         {
+            m_usePoolMessages = true;
             while (pollMessage(autoReceipt)) ;
+            m_usePoolMessages = false;
         }
 
         public bool pollMessage(bool autoReceipt = true)
@@ -160,9 +163,16 @@ namespace WhatsAppApi
 
         protected bool processInboundData(byte[] msgdata, bool autoReceipt = true)
         {
+            try
+            {
             ProtocolTreeNode node = this.reader.nextTree(msgdata);
-            if (node == null)
-                return false;
+
+                if (node != null)
+                {
+                    //foreach ( ProtocolTreeNode x in node.GetAllChildren() )
+                    //{
+                    //    Console.Write(x.GetData().ToString());
+                    //}
 
             if (ProtocolTreeNode.TagEquals(node, "challenge"))
             {
@@ -295,6 +305,13 @@ namespace WhatsAppApi
 
             return true;
         }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return false;
+        }
 
         protected void handleMessage(ProtocolTreeNode node, bool autoReceipt)
         {
@@ -329,11 +346,13 @@ namespace WhatsAppApi
                 //media message
 
                 //define variables in switch
+                string UserName;
                 string file, url, from, id;
                 int size;
                 byte[] preview, dat;
                 id = node.GetAttribute("id");
                 from = node.GetAttribute("from");
+                UserName = node.GetAttribute("notify");
                 switch (media.GetAttribute("type"))
                 {
                     case "image":
@@ -341,21 +360,21 @@ namespace WhatsAppApi
                         file = media.GetAttribute("file");
                         size = Int32.Parse(media.GetAttribute("size"));
                         preview = media.GetData();
-                        this.fireOnGetMessageImage(node, from, id, file, size, url, preview);
+                        this.fireOnGetMessageImage(node, from, id, file, size, url, preview, UserName);
                         break;
                     case "audio":
                         file = media.GetAttribute("file");
                         size = Int32.Parse(media.GetAttribute("size"));
                         url = media.GetAttribute("url");
                         preview = media.GetData();
-                        this.fireOnGetMessageAudio(node, from, id, file, size, url, preview);
+                        this.fireOnGetMessageAudio(node, from, id, file, size, url, preview, UserName);
                         break;
                     case "video":
                         file = media.GetAttribute("file");
                         size = Int32.Parse(media.GetAttribute("size"));
                         url = media.GetAttribute("url");
                         preview = media.GetData();
-                        this.fireOnGetMessageVideo(node, from, id, file, size, url, preview);
+                        this.fireOnGetMessageVideo(node, from, id, file, size, url, preview, UserName);
                         break;
                     case "location":
                         double lon = double.Parse(media.GetAttribute("longitude"), System.Globalization.CultureInfo.InvariantCulture);
@@ -363,7 +382,7 @@ namespace WhatsAppApi
                         preview = media.GetData();
                         name = media.GetAttribute("name");
                         url = media.GetAttribute("url");
-                        this.fireOnGetMessageLocation(node, from, id, lon, lat, url, name, preview);
+                        this.fireOnGetMessageLocation(node, from, id, lon, lat, url, name, preview, UserName);
                         break;
                     case "vcard":
                         ProtocolTreeNode vcard = media.GetChild("vcard");
