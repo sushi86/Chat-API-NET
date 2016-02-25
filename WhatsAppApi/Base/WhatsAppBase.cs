@@ -20,6 +20,8 @@ namespace WhatsAppApi
 
         public static bool DEBUG;
 
+        public static bool DEBUGOutBound;
+
         protected string password;
 
         protected bool hidden;
@@ -140,7 +142,8 @@ namespace WhatsAppApi
             }
         }
 
-        protected void SendNode(ProtocolTreeNode node)
+        //BRIAN MODIFIED FIXME: SHOULD NOT BE OPENED LIKE THIS INLINE THE Axolotl CLASS INSTEAD
+        public void SendNode(ProtocolTreeNode node)
         {
             m_LastSentInfo = DateTime.UtcNow.ToFileTime();
             this.SendData(this.BinWriter.Write(node));

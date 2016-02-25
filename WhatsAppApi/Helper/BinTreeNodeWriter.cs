@@ -46,7 +46,8 @@ namespace WhatsAppApi.Helper
             }
             else
             {
-                this.DebugPrint(node.NodeString("tx "));
+                if (WhatsApp.DEBUG && WhatsApp.DEBUGOutBound)
+                    this.DebugPrint(node.NodeString("tx "));
                 this.writeInternal(node);
             }
             return this.flushBuffer(encrypt);

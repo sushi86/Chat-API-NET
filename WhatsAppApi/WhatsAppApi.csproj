@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WhatsAppApi</RootNamespace>
     <AssemblyName>WhatsAppApi</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -24,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -51,6 +52,7 @@
     <Compile Include="Base\ApiBase.cs" />
     <Compile Include="Base\WhatsSendBase.cs" />
     <Compile Include="Helper\AccountInfo.cs" />
+    <Compile Include="Helper\AxolotlManager.cs" />
     <Compile Include="Helper\BinTreeNodeReader.cs" />
     <Compile Include="Helper\BinTreeNodeWriter.cs" />
     <Compile Include="Helper\DebugAdapter.cs" />
@@ -70,11 +72,6 @@
     <Compile Include="Parser\FMessage.cs" />
     <Compile Include="Parser\FMessageVisitor.cs" />
     <Compile Include="Parser\GroupSetting.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Register\WaToken.cs" />
     <Compile Include="Register\WhatsRegisterV2.cs" />
     <Compile Include="Response\CorruptStreamException.cs" />
@@ -90,10 +87,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Parser\countries.csv" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\mylibaxolotl\mylibaxolotl.csproj">
+      <Project>{1debda0c-62c7-40a9-b74a-0f086fc2b65d}</Project>
+      <Name>mylibaxolotl</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
