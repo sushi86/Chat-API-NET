@@ -37,7 +37,8 @@ namespace WhatsAppApi.Settings
         /// The whatsapp version the client complies to
         /// </summary>
 		//public const string WhatsAppVer = "2.13.21";
-        public const string WhatsAppVer = "2.12.440";
+        //public const string WhatsAppVer = "2.12.440";
+        public const string WhatsAppVer = "2.12.556";
 
         /// <summary>
         /// The port that needs to be connected to
@@ -64,7 +65,8 @@ namespace WhatsAppApi.Settings
         /// The useragent used for http requests
         /// </summary>
 		//public const string UserAgent = "WhatsApp/2.13.21 S40Version/14.26 Device/Nokia302";
-        public const string UserAgent = "WhatsApp/2.12.440 Android/4.3 Device/Xiaomi-HM_1SW";
+        //public const string UserAgent = "WhatsApp/2.12.440 Android/4.3 Device/Xiaomi-HM_1SW";
+        public const string UserAgent = "WhatsApp/2.12.556 Android/4.3 Device/Xiaomi-HM_1SW";
 
 
         #endregion
